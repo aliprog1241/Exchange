@@ -3,6 +3,7 @@ import json
 import os
 
 from config import url,rulse
+from notification import send_sms
 
 #for API and response
 
@@ -36,6 +37,8 @@ def send_mail(timestamp, rates):
 
 # add  notification
 
+
+
 def chek_notify_rules(rates):
     preferred = rulse['notification'],['preferred']
     msg =''
@@ -44,11 +47,12 @@ def chek_notify_rules(rates):
             msg += f'{exc}reached nin:{rates[exc]}'
         if rates[exc] >= preferred[exc]['max']:
             msg += f'{exc}reached max:{rates[exc]}'
+
+    print(msg)
     return msg
 
-def send_notification():
-    pass
-
+def send_notification(msg):
+    send_sms(msg)
 
 if __name__ == "__main__" :
     response = get_rates()
