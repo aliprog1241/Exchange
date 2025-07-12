@@ -22,6 +22,9 @@ def send_notification(msg):
     except HTTPException as e:
         print("HTTP error:", e)
 
+
+'''کد های بدرد نخور جهت یاد آوری اشتباهات'''
+
 # try:
 #     api = KavenegarAPI(KAVENEGAR_API_KEY)
 #     params = {
@@ -40,11 +43,6 @@ def send_notification(msg):
 
 # params = { 'sender' : '2000660110', 'receptor': '09199983035', 'message' :'yasin'}
 # response = api.sms_send(params)
-
-
-
-
-
 
 
 # def send_sms(txt):

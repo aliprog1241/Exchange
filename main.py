@@ -57,6 +57,8 @@ def check_notify_rules(rates):
 
     return msg
 
+'''کد های بدرد نخور جهت یاد آوری اشتباهات'''
+
 # def chek_notify_rules(rates):
 #     preferred = rulse['notification'],['preferred']
 #     msg =''
@@ -81,6 +83,8 @@ if __name__ == "__main__":
         notification_msg = check_notify_rules(response['rates'])
         if notification_msg:
             send_notification(notification_msg)
+
+'''کد های بدرد نخور جهت یاد آوری اشتباهات'''
 
 # if __name__ == "__main__" :
 #     response = get_rates()
