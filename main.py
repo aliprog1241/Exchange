@@ -2,8 +2,8 @@ import requests
 import json
 import os
 
-from config import url,rulse
-from notification import send_sms
+from config import url,rules
+from notification import send_notification 
 
 #for API and response
 
@@ -26,41 +26,69 @@ def archive(filename, rates):
 
 def send_mail(timestamp, rates):
     subject = f'{timestamp} rates'
-    if rulse['preferred'] is not None :
+    if 'preferred' in rules['email'] and rules['email']['preferred']:
         tmp = dict()
-        for exc in rulse['preferred'] :
-            tmp[exc] = rates[exc]
+        for exc in rules['email']['preferred']:
+            if exc in rates:
+                tmp[exc] = rates[exc]
         rates = tmp
 
 
-    text  = json.dumps(rates)
 
+    text  = json.dumps(rates)
+    print(subject)
+    print(text)
 # add  notification
 
 
 
-def chek_notify_rules(rates):
-    preferred = rulse['notification'],['preferred']
-    msg =''
-    for exc in preferred:
-        if rates[exc] <= preferred[exc]['min']:
-            msg += f'{exc}reached nin:{rates[exc]}'
-        if rates[exc] >= preferred[exc]['max']:
-            msg += f'{exc}reached max:{rates[exc]}'
+def check_notify_rules(rates):
+    preferred = rules['notification']['preferred']
+    msg = ''
+    for exc, limits in preferred.items():
+        if exc in rates:
+            rate = rates[exc]
+            if rate <= limits['min']:
+                msg += f'{exc} reached min: {rate}\n'
+            elif rate >= limits['max']:
+                msg += f'{exc} reached max: {rate}\n'
+            else:
+                msg += f'{exc} is OK: {rate}\n'
 
-    print(msg)
     return msg
 
-def send_notification(msg):
-    send_sms(msg)
+# def chek_notify_rules(rates):
+#     preferred = rulse['notification'],['preferred']
+#     msg =''
+#     for exc in preferred:
+#         if rates[exc] <= preferred[exc]['min']:
+#             msg += f'{exc}reached nin:{rates[exc]}'
+#         if rates[exc] >= preferred[exc]['max']:
+#             msg += f'{exc}reached max:{rates[exc]}'
 
-if __name__ == "__main__" :
+#     print(msg)
+#     return msg
+
+
+
+if __name__ == "__main__":
     response = get_rates()
-    if rulse['archive']:
+    if rules['archive']:
         archive(response['timestamp'], response['rates'])
-    if rulse['email']:
-        archive(response['timestamp'], response['rates'])
-    if rulse['notification']['enable']:
-        notificatin_msg = chek_notify_rules(response['rates'])
-        if notificatin_msg:
-            send_notification(notificatin_msg)
+    if rules['email']['send_mail']:
+        send_mail(response['timestamp'], response['rates'])  # only if this function exists
+    if rules['notification']['enable']:
+        notification_msg = check_notify_rules(response['rates'])
+        if notification_msg:
+            send_notification(notification_msg)
+
+# if __name__ == "__main__" :
+#     response = get_rates()
+#     if rulse['archive']:
+#         archive(response['timestamp'], response['rates'])
+#     if rulse['email']:
+#         archive(response['timestamp'], response['rates'])
+#     if rulse['notification']['enable']:
+#         notificatin_msg = chek_notify_rules(response['rates'])
+#         if notificatin_msg:
+#             send_notification(notificatin_msg)

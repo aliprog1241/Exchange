@@ -14,7 +14,7 @@ EMAIL_RECEIVER = 'miri03369@gmail.com'
     'preferred' : ['BTC', 'IRR', "USD", "CAD" ]
 }
 """
-rulse  = {
+rules  = {
     'archive' : True,
     'email':{
         'send_mail' : True,
