@@ -111,16 +111,3 @@ if __name__ == "__main__":
         if notification_msg:
         
             send_notification(notification_msg)
-
-'''کد های بدرد نخور جهت یاد آوری اشتباهات'''
-
-# if __name__ == "__main__" :
-#     response = get_rates()
-#     if rulse['archive']:
-#         archive(response['timestamp'], response['rates'])
-#     if rulse['email']:
-#         archive(response['timestamp'], response['rates'])
-#     if rulse['notification']['enable']:
-#         notificatin_msg = chek_notify_rules(response['rates'])
-#         if notificatin_msg:
-#             send_notification(notificatin_msg)
