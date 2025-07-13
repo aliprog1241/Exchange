@@ -69,34 +69,6 @@ def check_notify_rules(rates):
     return msg
 
 
-# def check_notify_rules(rates):
-#     preferred = rules['notification']['preferred']
-#     msg = ''
-#     for exc, limits in preferred.items():
-#         if exc in rates:
-#             rate = rates[exc]
-#             if rate <= limits['min']:
-#                 msg += f'{exc} reached min: {rate}\n'
-#             elif rate >= limits['max']:
-#                 msg += f'{exc} reached max: {rate}\n'
-#             else:
-#                 msg += f'{exc} is OK: {rate}\n'
-
-#     return msg
-
-
-
-# def chek_notify_rules(rates):
-#     preferred = rulse['notification'],['preferred']
-#     msg =''
-#     for exc in preferred:
-#         if rates[exc] <= preferred[exc]['min']:
-#             msg += f'{exc}reached nin:{rates[exc]}'
-#         if rates[exc] >= preferred[exc]['max']:
-#             msg += f'{exc}reached max:{rates[exc]}'
-
-#     print(msg)
-#     return msg
 
 
 
