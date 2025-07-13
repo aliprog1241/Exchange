@@ -1,3 +1,6 @@
+
+
+
 import requests
 import json
 import os
@@ -41,23 +44,47 @@ def send_mail(timestamp, rates):
 # add  notification
 
 
+import jdatetime
+import datetime
 
 def check_notify_rules(rates):
     preferred = rules['notification']['preferred']
     msg = ''
+
+    # Add current Jalali date
+    now = datetime.datetime.now()
+    jalali_date = jdatetime.datetime.fromgregorian(datetime=now).strftime('%Y/%m/%d %H:%M')
+    msg += f'📅 تاریخ: {jalali_date}\n\n'
+
     for exc, limits in preferred.items():
         if exc in rates:
             rate = rates[exc]
             if rate <= limits['min']:
-                msg += f'{exc} reached min: {rate}\n'
+                msg += f'{exc} reached min {rate}\n'
             elif rate >= limits['max']:
-                msg += f'{exc} reached max: {rate}\n'
+                msg += f'{exc} reached max {rate}\n'
             else:
                 msg += f'{exc} is OK: {rate}\n'
 
     return msg
 
-'''کد های بدرد نخور جهت یاد آوری اشتباهات'''
+
+# def check_notify_rules(rates):
+#     preferred = rules['notification']['preferred']
+#     msg = ''
+#     for exc, limits in preferred.items():
+#         if exc in rates:
+#             rate = rates[exc]
+#             if rate <= limits['min']:
+#                 msg += f'{exc} reached min: {rate}\n'
+#             elif rate >= limits['max']:
+#                 msg += f'{exc} reached max: {rate}\n'
+#             else:
+#                 msg += f'{exc} is OK: {rate}\n'
+
+#     return msg
+
+
 
 # def chek_notify_rules(rates):
 #     preferred = rulse['notification'],['preferred']
@@ -82,6 +109,7 @@ if __name__ == "__main__":
     if rules['notification']['enable']:
         notification_msg = check_notify_rules(response['rates'])
         if notification_msg:
+        
             send_notification(notification_msg)
 
 '''کد های بدرد نخور جهت یاد آوری اشتباهات'''
